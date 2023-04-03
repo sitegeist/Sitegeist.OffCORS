@@ -16,27 +16,27 @@ class CorsMiddleware implements MiddlewareInterface
 {
     /**
      * @var string
-     * @Flow\InjectConfiguration(path="allowedOrigins")
+     * @Flow\InjectConfiguration(path="allowOrigins")
      */
-    protected $allowedOrigins;
+    protected $allowOrigins;
 
     /**
      * @var string
-     * @Flow\InjectConfiguration(path="allowedMethods")
+     * @Flow\InjectConfiguration(path="allowMethods")
      */
-    protected $allowedMethods;
+    protected $allowMethods;
 
     /**
      * @var string
-     * @Flow\InjectConfiguration(path="allowedHeaders")
+     * @Flow\InjectConfiguration(path="allowHeaders")
      */
-    protected $allowedHeaders;
+    protected $allowHeaders;
 
     /**
      * @var string
-     * @Flow\InjectConfiguration(path="exposedHeaders")
+     * @Flow\InjectConfiguration(path="exposeHeaders")
      */
-    protected $exposedHeaders;
+    protected $exposeHeaders;
 
     /**
      * @var bool
@@ -62,14 +62,15 @@ class CorsMiddleware implements MiddlewareInterface
         $cors = new Cors(
             $request,
             (bool) $this->allowCredentials,
-            is_string($this->allowedHeaders) ? Arrays::trimExplode(',', $this->allowedHeaders) : $this->allowedHeaders,
-            is_string($this->exposedHeaders) ? Arrays::trimExplode(',', $this->exposedHeaders) : $this->exposedHeaders,
-            is_string($this->allowedOrigins) ? Arrays::trimExplode(',', $this->allowedOrigins) : $this->allowedOrigins,
-            is_string($this->allowedMethods) ? Arrays::trimExplode(',', $this->allowedMethods) : $this->allowedMethods,
+            is_string($this->allowOrigins) ? Arrays::trimExplode(',', $this->allowOrigins) : $this->allowOrigins,
+            is_string($this->allowMethods) ? Arrays::trimExplode(',', $this->allowMethods) : $this->allowMethods,
+            is_string($this->allowHeaders) ? Arrays::trimExplode(',', $this->allowHeaders) : $this->allowHeaders,
+            is_string($this->exposeHeaders) ? Arrays::trimExplode(',', $this->exposeHeaders) : $this->exposeHeaders,
             (int) $this->maxAge
         );
 
         if ($cors->isPreflightRequest()) {
+
             $response = $this->responseFactory->createResponse(204);
             $response = $cors->addCorsHeaders($response);
             return $response;

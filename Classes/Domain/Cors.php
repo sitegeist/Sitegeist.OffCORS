@@ -11,20 +11,20 @@ class Cors
     /**
      * @param RequestInterface $request
      * @param bool $allowCredentials
-     * @param string[] $allowedHeaders
+     * @param string[] $allowOrigins
+     * @param string[] $allowMethods
+     * @param string[] $allowHeaders
      * @param string[] $exposeHeaders
-     * @param string[] $allowedOrigins
-     * @param string[] $allowedMethods
      * @param int $maxAge
      */
     public function __construct(
         public readonly RequestInterface $request,
-        public readonly bool $allowCredentials,
-        public readonly array $allowedHeaders,
-        public readonly array $exposeHeaders,
-        public readonly array $allowedOrigins,
-        public readonly array $allowedMethods,
-        public readonly int $maxAge
+        public readonly bool             $allowCredentials,
+        public readonly array            $allowOrigins,
+        public readonly array            $allowMethods,
+        public readonly array            $allowHeaders,
+        public readonly array            $exposeHeaders,
+        public readonly int              $maxAge
     )
     {
     }
@@ -48,13 +48,13 @@ class Cors
     public function getAllowOriginHeaderValue(): string
     {
         $requestOrigin = $this->request->getHeaderLine('Origin');
-        $hasWildcard = in_array('*', $this->allowedOrigins);
+        $hasWildcard = in_array('*', $this->allowOrigins);
 
         if ($hasWildcard && !$requestOrigin) {
             return '*';
         }
 
-        if (in_array($requestOrigin, $this->allowedOrigins) || $hasWildcard) {
+        if (in_array($requestOrigin, $this->allowOrigins) || $hasWildcard) {
             return $requestOrigin;
         }
 
@@ -63,12 +63,12 @@ class Cors
 
     public function getAllowMethodsHeaderValue(): array
     {
-        return $this->allowedMethods;
+        return $this->allowMethods;
     }
 
     public function getAllowHeaders(): array
     {
-        return $this->allowedHeaders;
+        return $this->allowHeaders;
     }
 
     public function getExposeHeaders(): array

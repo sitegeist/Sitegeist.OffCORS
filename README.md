@@ -18,13 +18,13 @@ Sitegeist:
     # allow credentials via cors (bool)
     allowCredentials: false
     # allowed cors origins (array or csv-string)
-    allowedOrigins: "*"
+    allowOrigins: "*"
     # allowed cors methods (array or csv-string)
-    allowedMethods: "GET"
+    allowMethods: "GET"
     # allowed cors headers (array or csv-string)
-    allowedHeaders: ""
+    allowHeaders: ""
     # exposed cors headers (array or csv-string)
-    exposedHeaders: ""
+    exposeHeaders: ""
     # max age cors informations (int)
     maxAge: 86400
 ```
