@@ -1,0 +1,20 @@
+{
+    "description": "CORS Middleware for Neos-CMS / Flow-Framework",
+    "type": "neos-package",
+    "name": "sitegeist/offcors",
+    "license": "GPL-3.0-or-later",
+    "require": {
+        "php": ">=8.1.0",
+        "neos/flow": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Sitegeist\\OffCORS\\": "Classes/"
+        }
+    },
+    "extra": {
+        "neos": {
+            "package-key": "Sitegeist.OffCORS"
+        }
+    }
+}
