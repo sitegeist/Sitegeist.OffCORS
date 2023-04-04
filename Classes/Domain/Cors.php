@@ -31,18 +31,13 @@ class Cors
 
     public function addCorsHeaders(ResponseInterface $response): ResponseInterface
     {
-        $response = $response->withAddedHeader("Access-Control-Allow-Credentials", $this->getAllowCredentialsHeaderValue());
         $response = $response->withAddedHeader("Access-Control-Allow-Origin", $this->getAllowOriginHeaderValue());
-        $response = $response->withAddedHeader("Access-Control-Allow-Methods", $this->getAllowMethodsHeaderValue() || "");
-        $response = $response->withAddedHeader("Access-Control-Allow-Headers", $this->getAllowHeaders() || "");
-        $response = $response->withAddedHeader("Access-Control-Expose-Headers", $this->getExposeHeaders() || "");
-        $response = $response->withAddedHeader("Access-Control-Max-Age", $this->getMaxAge());
+        $response = $response->withAddedHeader("Access-Control-Allow-Credentials", $this->allowCredentials ? 'true' : 'false');
+        $response = $response->withAddedHeader("Access-Control-Allow-Methods", $this->allowMethods ?: "");
+        $response = $response->withAddedHeader("Access-Control-Allow-Headers", $this->allowHeaders ?: "");
+        $response = $response->withAddedHeader("Access-Control-Expose-Headers", $this->exposeHeaders ?: "");
+        $response = $response->withAddedHeader("Access-Control-Max-Age", $this->maxAge);
         return $response;
-    }
-
-    public function getAllowCredentialsHeaderValue(): string
-    {
-        return $this->allowCredentials ? 'true' : 'false';
     }
 
     public function getAllowOriginHeaderValue(): string
@@ -59,25 +54,6 @@ class Cors
         }
 
         return '';
-    }
-
-    public function getAllowMethodsHeaderValue(): array
-    {
-        return $this->allowMethods;
-    }
-
-    public function getAllowHeaders(): array
-    {
-        return $this->allowHeaders;
-    }
-
-    public function getExposeHeaders(): array
-    {
-        return $this->exposeHeaders;
-    }
-    public function getMaxAge(): int
-    {
-        return $this->maxAge;
     }
 
     public function isCorsRequest(): bool
